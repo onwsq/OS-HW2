@@ -40,8 +40,8 @@ public class CLOCK {
         }
     }
 
-    // Runs with regular order request
-    public void regularOrderRequest(ArrayList<Integer> pages, int frames) {
+    // Clock algorithm
+    public void clockAlgo(ArrayList<Integer> pages, int frames) {
         int pointer = 0;
 
         // stores pages that are in physical memory
@@ -63,40 +63,21 @@ public class CLOCK {
                 // update page faults
             }
         }
+        System.out.println("FINAL: " + Arrays.toString(arr.toArray()));
     }
 
     // Runs equiprobable request for any of the n pages
     public void equiprobableRequest(ArrayList<Integer> pages, int frames) {
-        int pointer = 0;
-
-        // stores pages that are in physical memory
-        ArrayList<Integer> arr = new ArrayList<Integer>(frames);
-        for (int i = 0; i < frames; i++) {
-            arr.add(-1);
-        }
-        
-        // remembers which if page is given second chance
-        ArrayList<Integer> secondChance = new ArrayList<Integer>(frames);
-        for (int i = 0; i < frames; i++) {
-            secondChance.add(0);
-        }
-
         // randomizes order of pages
         Collections.shuffle(pages);
         System.out.println("shuffled array: " + Arrays.toString(pages.toArray()));
 
-        // runs clock page replacement algorithms
-        for (int i = 0; i < pages.size(); i++) {
-            if (updateSecondChance(pages.get(i), arr, secondChance, frames) == 0) {
-                pointer = replaceAndUpdatePointer(pages.get(i), arr, secondChance, frames, pointer);
-            }
-        }
-        System.out.println("FINAL: " + Arrays.toString(arr.toArray()));
+        clockAlgo(pages, frames);
 
     }
 
     // Runs strongly biased probability for lower-numbered pages to be requested
-    public ArrayList<Integer> exponentialCLOCK(ArrayList<Integer> pages, int frames){
+    public void exponentialCLOCK(ArrayList<Integer> pages, int frames){
         //arraylist of frequences for each value
         ArrayList<Integer> expFreq = new ArrayList<>();
         //arraylist with all instances of frequences
@@ -150,7 +131,8 @@ public class CLOCK {
             }
         }
         System.out.print("new ordering of pages with exponential probability: "+Arrays.toString(pages.toArray())+"\n");
-        return pages;
+
+        clockAlgo(pages, frames);
     }
 
     // Gets only the page values without repeats (helper method for exponentialCLOCK method)
@@ -183,8 +165,8 @@ public class CLOCK {
         CLOCK test = new CLOCK();
 
         // strongly biased probability for lower-numbered pages to be requested 
-        // ArrayList<Integer> generatedPages = test.generatePages(1024, 10);
-        // test.exponentialCLOCK(generatedPages, 4);
+        ArrayList<Integer> generatedPages = test.generatePages(1024, 10);
+        test.exponentialCLOCK(generatedPages, 4);
 
 
         // // equiprobable request
@@ -201,16 +183,16 @@ public class CLOCK {
         // test.equiprobableRequest(pages, 2);
 
 
-        ArrayList<Integer> pages = new ArrayList<Integer>();
-        pages.add(0);
-        pages.add(1);
-        pages.add(1);
-        pages.add(4);
-        pages.add(4);
-        pages.add(8);
-        System.out.println(Arrays.toString(pages.toArray()));
-        // test.regularOrderRequest(pages,2);
-        test.equiprobableRequest(pages, 4);
+        // ArrayList<Integer> pages = new ArrayList<Integer>();
+        // pages.add(0);
+        // pages.add(1);
+        // pages.add(1);
+        // pages.add(4);
+        // pages.add(4);
+        // pages.add(8);
+        // System.out.println(Arrays.toString(pages.toArray()));
+        // // test.regularOrderRequest(pages,2);
+        // test.equiprobableRequest(pages, 4);
 
     }
 
