@@ -56,11 +56,10 @@ public class CLOCK {
             secondChance.add(0);
         }
 
-        // runs clock page replacement algorithms
+        // runs clock page replacement algorithm
         for (int i = 0; i < pages.size(); i++) {
             if (updateSecondChance(pages.get(i), arr, secondChance, frames) == 0) {
                 pointer = replaceAndUpdatePointer(pages.get(i), arr, secondChance, frames, pointer);
-                // update page faults
             }
         }
         System.out.println("FINAL: " + Arrays.toString(arr.toArray()));
